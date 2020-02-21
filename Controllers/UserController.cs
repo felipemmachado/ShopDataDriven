@@ -65,9 +65,11 @@ namespace Shop.Controllers
                 return BadRequest(ModelState);
 
             try {
-
+                // todo usuario sempre vai ser "funcionário"
+                user.Role = "employee";
                 context.Users.Add(user);
                 await context.SaveChangesAsync();
+                user.Password = "";
                 return user;
 
             } 
@@ -99,7 +101,7 @@ namespace Shop.Controllers
 
             var token = TokenService.GenerateToken(userLogin);
 
-            return token;
+            return new  { token };
         }
     }
 }
