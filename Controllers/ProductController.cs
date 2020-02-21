@@ -26,7 +26,9 @@ namespace Shop.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<Product>> GetById(int id, [FromServices] DataContext context)
+        public async Task<ActionResult<Product>> GetById(
+            int id, 
+            [FromServices] DataContext context)
         {
             Product product = await context
                 .Products
@@ -39,7 +41,9 @@ namespace Shop.Controllers
 
         [HttpGet]
         [Route("categories/{id:int}")]
-        public async Task<ActionResult<List<Product>>> GetByCategory(int id, [FromBody] DataContext context)
+        public async Task<ActionResult<List<Product>>> GetByCategory(
+            int id, 
+            [FromServices] DataContext context)
         {
             List<Product> products = await context
                 .Products
@@ -51,7 +55,9 @@ namespace Shop.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Product>> Post([FromBody] Product product, [FromServices] DataContext context)
+        public async Task<ActionResult<Product>> Post(
+            [FromBody] Product product, 
+            [FromServices] DataContext context)
         {
             if (ModelState.IsValid)
             {
@@ -59,7 +65,6 @@ namespace Shop.Controllers
                 await context.SaveChangesAsync();
                 return product;
             }
-
 
             return BadRequest(ModelState);
         }
