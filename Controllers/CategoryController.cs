@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shop.Context;
@@ -14,6 +15,7 @@ namespace Shop.Controllers
     {
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<List<Category>>> Get([FromServices]DataContext context)
         {
             var categoires = await context.Categories.AsNoTracking().ToListAsync();
@@ -21,6 +23,7 @@ namespace Shop.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Category>> GetById(int id, [FromServices]DataContext context)
         {
             var category = await context.Categories.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
@@ -28,6 +31,7 @@ namespace Shop.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Category>> Post([FromBody]Category category, [FromServices]DataContext context)
         {
             if(!ModelState.IsValid)
@@ -43,6 +47,7 @@ namespace Shop.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [Authorize]
         public async Task<ActionResult<Category>> Put(int id, [FromBody]Category category, [FromServices]DataContext context)
         {
             if(id != category.Id)
@@ -64,6 +69,7 @@ namespace Shop.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize]
         public async Task<ActionResult> Delete(int id, [FromServices]DataContext context)
         {
             var category = await context.Categories.FirstOrDefaultAsync(x => x.Id == id);
@@ -79,7 +85,6 @@ namespace Shop.Controllers
             } catch (Exception e){
                 return BadRequest(new { message = "Não foi possível excluír a categoria", error = e.Message });
             }
-           //  return Ok("");
         }
 
     }
