@@ -1,0 +1,8 @@
+Pra habilitar o EF vc tem que instalar um pacote global do dotnet
+comando: dotnet tool install --global dotnet-ef
+
+agora vc tem que add a migração (caso nao tenha) (vai gerar a pasta de migration no projeto)
+dotnet ef migrations add InicalCreate
+
+para atualizar o banco com suas classes
+dotnet ef database update
