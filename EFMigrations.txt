@@ -1,3 +1,5 @@
+MIGRATIONS
+
 Pra habilitar o EF vc tem que instalar um pacote global do dotnet
 comando: dotnet tool install --global dotnet-ef
 
